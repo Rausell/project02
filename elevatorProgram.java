@@ -3,11 +3,14 @@
 import java.io.FileInputStream;
 import java.io.IOException;
 import java.util.Properties;
+import java.util.Iterator;
 import java.util.*;
 
 /*
-Class floor demonstrates the process of multiple floors. Including handling
-arrival.
+Class Passenger holds the information for the requested amount of 
+Passengers. This will later help us keep track of the passengers 
+loading/unloading to their desired location & keep tabs on the time it
+takes to get the passengers around.
 */
 
 class Passenger{
@@ -47,11 +50,54 @@ class Passenger{
 	}
 }//End of Passenger class
 
-/*
 class Elevator{
+	//Track set/given max capacity
+	private int capacity;
+	//Track elevator location on given amount of floors
+	private int currentFloor;
+	/*
+	Using Queues as the data structure to keep track of the Passengers that are 
+	coming in & out of the elevator. This gives us flexibility to deal with situations
+	where user1 wants floor 9, but user2 (who entered recently) needs floor 7.
+	Will allow stops before it reaches 9 (if going/meeting in that direction).
+	*/
+	private Queue<Passenger> passengers;
 
-}
+	//Constructors
+	public Elevator(int capacity){
+		this.capacity = capacity;
+		//Starting point for the elevators
+		this.currentFloor = 0;
+		this.passengers = new LinkedList<>();
+	}
 
+	//Loading passengers into elevator
+	public void load(Passenger passenger){
+		passengers.add(passenger);
+	}
+	//Unloading passengers from elevator if elevator is in destination floor of the passenger
+	public void unload(){
+		//Allows us to remove passengers that meet destination floor criteria
+		Iterator<Passenger> iterator = passengers.iterator();
+		while(iterator.hasNext()){
+			Passenger passenger = iterator.next();
+			if(passenger.getef() == currentFloor){
+				iterator.remove();
+			}
+		}
+	}
+
+	//Moving elevator to next floor
+	public void nextFloor(int floor){
+		currentFloor = floor;
+	}
+	//Checking if elevator has max passenger capacity
+	public boolean maxCap(){
+		return passengers.size() >= capacity;
+	}
+}//End of Elevator class
+
+/*
 class Floor{
 	private int floors;
 	private List<Elevator> elevators;

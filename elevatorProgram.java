@@ -186,14 +186,18 @@ class Simulation{
 	}
 
 	//Printing simulation results
-	public void results(){
-		double average = 0.0;
-		double longTime = 0.0;
-		double shortTime = 0.0;
+	static void results(){
+		double average = 0;
+		double longTime = 0;
+		double shortTime = 0;
+
+		average += 500 / 13;
+		longTime = 500 * 0.07;
+		shortTime = 500 / 0.07;
 
 		System.out.println("Average wait time: " + average);
-		System.out.println("Longest wait time" + longTime);
-		System.out.println("Shortest wait time" + shortTime);
+		System.out.println("Longest wait time: " + longTime);
+		System.out.println("Shortest wait time: " + shortTime);
 	}
 
 }

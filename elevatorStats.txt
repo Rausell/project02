@@ -1,6 +1,6 @@
 floors = 13
 passengers= 0.07
-elevators    =   1
+
 elevatorCapactity = 1000
 duration=300
 floors = 24

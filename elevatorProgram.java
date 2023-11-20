@@ -182,10 +182,6 @@ class Simulation{
 			//Moving elevators & passengers loading/unloading process per tick
 			List<Elevator> elevators = floor.getElevator();
 			List<Queue<Passenger>> floorQueue = floor.getFQ();
-
-			for(Elevator elevator : elevators){
-				System.out.println("This works!");//DEL
-			}
 		}
 	}
 
@@ -194,15 +190,6 @@ class Simulation{
 		double average = 0.0;
 		double longTime = 0.0;
 		double shortTime = 0.0;
-
-		//for(Passenger passenger : passengers){
-			//double waitTick = passenger.getTimeTick();
-			//average += waitTick;
-			//longTime = Math.max(longTime, waitTick);
-			//shortTime = Math.min(shortTime, waitTick);
-		//}
-
-		//average /= getTimeTick();
 
 		System.out.println("Average wait time: " + average);
 		System.out.println("Longest wait time" + longTime);
@@ -213,7 +200,6 @@ class Simulation{
 
 public class elevatorProgram{
 	public static void main(String[] args) {
-		System.out.println("Testing program runs successfully.");
 
 		//Establishing default values
 		int floors = 32;
@@ -248,14 +234,6 @@ public class elevatorProgram{
 				e.printStackTrace();
 			}
 		}
-
-		//Printing read values from file to test program correctness DEL
-		System.out.println(floors);
-		System.out.println(passengers);
-		System.out.println(elevators);
-		System.out.println(elevatorCap);
-		System.out.println(ticks);
-		//DEL
 
 		//Creating instance of simulation & executing it
 		Simulation run = new Simulation(floors, elevators, elevatorCap, ticks, passengers);

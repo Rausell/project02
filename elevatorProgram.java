@@ -97,7 +97,7 @@ class Elevator{
 	}
 }//End of Elevator class
 
-/*
+
 class Floor{
 	private int floors;
 	private List<Elevator> elevators;
@@ -110,7 +110,7 @@ class Floor{
 		this.floorQueue = new ArrayList<>();
 	}
 }
-*/
+
 
 public class elevatorProgram{
 	public static void main(String[] args) {

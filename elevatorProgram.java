@@ -5,6 +5,67 @@ import java.io.IOException;
 import java.util.Properties;
 import java.util.*;
 
+/*
+Class floor demonstrates the process of multiple floors. Including handling
+arrival.
+*/
+
+class Passenger{
+	//Track passenger existence/dereference
+	private int id;
+	//Track passenger starting floor entered
+	private int sf;
+	//Track passenger ending floor (destination)
+	private int ef;
+	//Tracking ticks it took to get passenger to ef
+	private int timeTick;
+
+	//Constructors
+	public Passenger(int id, int sf, int ef, int timeTick){
+		this.id = id;
+		this.sf = sf;
+		this.ef = ef;
+		this.timeTick = timeTick;
+	}
+
+	//Getter methods for Passenger
+	/*
+	This is 'artificial functions' are created to access the information 
+	from this class to other classes not located within (similar to becoming global variables)
+	*/
+	public int getId(){
+		return id;
+	}
+	public int getsf(){
+		return sf;
+	}
+	public int getef(){
+		return ef;
+	}
+	public int getTimeTick(){
+		return timeTick;
+	}
+}//End of Passenger class
+
+/*
+class Elevator{
+
+}
+
+class Floor{
+	private int floors;
+	private List<Elevator> elevators;
+	private List<Queue<Passenger>> floorQueue;
+
+	//Constructor for floor
+	public Floor(int floors, int elevators, int elevatorCap){
+		this.floors = floors;
+		this.elevators = new ArrayList<>();
+		this.floorQueue = new ArrayList<>();
+	}
+}
+*/
+
 public class elevatorProgram{
 	public static void main(String[] args) {
 		System.out.println("Testing program runs successfully.");
@@ -37,6 +98,7 @@ public class elevatorProgram{
 				ticks = Integer.parseInt(properties.getProperty("duration", "500"));
 
 				file.close();
+			//Dealing with file error
 			} catch (IOException e){
 				e.printStackTrace();
 			}
@@ -49,7 +111,5 @@ public class elevatorProgram{
 		System.out.println(elevatorCap);
 		System.out.println(ticks);
 		//DEL
-
-
 	}
 }

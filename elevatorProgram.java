@@ -99,17 +99,43 @@ class Elevator{
 
 
 class Floor{
-	private int floors;
+	private int totalFloors;
+	//The following Lists allows each elevator keep track of its own floor progress
 	private List<Elevator> elevators;
 	private List<Queue<Passenger>> floorQueue;
 
 	//Constructor for floor
-	public Floor(int floors, int elevators, int elevatorCap){
-		this.floors = floors;
+	public Floor(int totalFloors, int totalElevators, int elevatorCap){
+		this.totalFloors = totalFloors;
 		this.elevators = new ArrayList<>();
 		this.floorQueue = new ArrayList<>();
+
+		//Initializing elevator movement & amount based on file request
+		for(int i = 0; i < totalElevators; i++){
+			elevators.add(new Elevator(elevatorCap));
+		}
+		//Initializing floor queues/requests 
+		for(int i = 0; i < totalFloors; i++){
+			floorQueue.add(new LinkedList<>());
+		}
 	}
-}
+
+	//Dealing with individual passenger arrivals for each floor
+	public void arrivals(Passenger passenger){
+		//Adding passenger intial floor & adding to queue as request
+		floorQueue.get(passenger.getsf()).add(passenger);
+	}
+	//Getter methods for Floor
+	public int getFloor(){
+		return totalFloors;
+	}
+	public List<Elevator>getElevator(){
+		return elevators;
+	}
+	public List<Queue<Passenger>> getFQ(){
+		return floorQueue;
+	}
+}//End of Floor class
 
 
 public class elevatorProgram{

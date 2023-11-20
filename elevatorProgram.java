@@ -239,6 +239,13 @@ public class elevatorProgram{
 			}
 		}
 
+		System.out.println("Information read: ");
+		System.out.println("Floor amount adjusted to: " + floors);
+		System.out.println("Passenger amount adjusted to: " + passengers);
+		System.out.println("Elevator amount adjusted to: " + elevators);
+		System.out.println("Elevator max capcacity adjusted toL " + elevatorCap);
+		System.out.println("Tick timer adjusted t0: " + ticks);
+
 		//Creating instance of simulation & executing it
 		Simulation run = new Simulation(floors, elevators, elevatorCap, ticks, passengers);
 		run.execute();

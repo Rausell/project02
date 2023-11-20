@@ -32,12 +32,24 @@ public class elevatorProgram{
 				//Default values still at play if no matching 'Key' exists				
 				floors = Integer.parseInt(properties.getProperty("floors", "32"));
 				passengers = Double.parseDouble(properties.getProperty("passengers", "0.03"));
+				elevators = Integer.parseInt(properties.getProperty("elevators", "1"));
+				elevatorCap = Integer.parseInt(properties.getProperty("elevatorCapacity", "10"));
+				ticks = Integer.parseInt(properties.getProperty("duration", "500"));
 
 				file.close();
 			} catch (IOException e){
-
+				e.printStackTrace();
 			}
 		}
+
+		//Printing read values from file to test program correctness DEL
+		System.out.println(floors);
+		System.out.println(passengers);
+		System.out.println(elevators);
+		System.out.println(elevatorCap);
+		System.out.println(ticks);
+		//DEL
+
 
 	}
 }

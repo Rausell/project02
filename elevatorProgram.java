@@ -129,7 +129,7 @@ class Floor{
 	public int getFloor(){
 		return totalFloors;
 	}
-	public List<Elevator>getElevator(){
+	public List<Elevator> getElevator(){
 		return elevators;
 	}
 	public List<Queue<Passenger>> getFQ(){
@@ -179,37 +179,12 @@ class Simulation{
 				floor.arrivals(passenger);
 			}
 
-			//Running elevator movement & passenger loading/unloading
+			//Moving elevators & passengers loading/unloading process per tick
 			List<Elevator> elevators = floor.getElevator();
 			List<Queue<Passenger>> floorQueue = floor.getFQ();
 
 			for(Elevator elevator : elevators){
-				elevator.unload();
-				if(!elevator.maxCap()){
-					int currentFloor = elevator.maxCap() ? elevator.getFloor() : -1;
-					for(int floor = 0; floor < floor.getFloor(); floor++){
-						Queue<Passenger> queue = floorQueue.get(floor);
-						if(!queue.isEmpty()){
-							elevator.load(queue.poll());
-							if(currentFloor == -1){
-								currentFloor = floor;
-								elevator.nextFloor(currentFloor);
-							}
-						}
-					}
-				}
-			}
-
-			//Checking if capacity is met
-			//If capacity is not met, elevator continues trajectory
-			for(Elevator elevator : elevators){
-				if(!elevator.maxCap()){
-					int currentFloor = elevator.getFloor();
-					int moveFloor = currentFloor + 1;
-					if(moveFloor < floor.getFloor()){
-						elevator.nextFloor(moveFloor);
-					}
-				}
+				System.out.println("This works!");//DEL
 			}
 		}
 	}
@@ -220,14 +195,14 @@ class Simulation{
 		double longTime = 0.0;
 		double shortTime = 0.0;
 
-		for(Passenger passenger : passengers){
-			double waitTick = passenger.getTimeTick();
-			average += waitTick;
-			longTime = Math.mac(longTime, waitTick);
-			shortTime = Math.min(shortTime, waitTick);
-		}
+		//for(Passenger passenger : passengers){
+			//double waitTick = passenger.getTimeTick();
+			//average += waitTick;
+			//longTime = Math.max(longTime, waitTick);
+			//shortTime = Math.min(shortTime, waitTick);
+		//}
 
-		average /= passengers.capacity;
+		//average /= getTimeTick();
 
 		System.out.println("Average wait time: " + average);
 		System.out.println("Longest wait time" + longTime);
@@ -281,5 +256,10 @@ public class elevatorProgram{
 		System.out.println(elevatorCap);
 		System.out.println(ticks);
 		//DEL
+
+		//Creating instance of simulation & executing it
+		Simulation run = new Simulation(floors, elevators, elevatorCap, ticks, passengers);
+		run.execute();
+		run.results();
 	}
 }

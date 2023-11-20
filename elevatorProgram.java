@@ -137,6 +137,104 @@ class Floor{
 	}
 }//End of Floor class
 
+class Simulation{
+	private Floor floor;
+	//Track the amount of time left
+	private int concurringTicks;
+	//Track total initial time given
+	private int ticks;
+	private double passengers;
+
+	//Constructors
+	public Simulation(int totalFloors, int totalElevators, int elevatorCap, int ticks, double passengers){
+		this.floor = new Floor(totalFloors, totalElevators, elevatorCap);
+		this.concurringTicks = 0;
+		this.ticks = ticks;
+		this.passengers = passengers;
+	}
+
+	/*
+	The following process incorporates creating randomized passengers as given in the file which will
+	have a destination set in mind & might appear based on given file probabilies
+	*/
+	private Passenger newPassenger(){
+		Random rand = new Random();
+		int sf = rand.nextInt(floor.getFloor());
+		int ef;
+		do{
+			//Continue in elevator trajectory
+			ef = rand.nextInt(floor.getFloor());
+		} while (ef == sf);//Until destination is met
+
+		//Tracking total time passenger lasted in elevator
+		return new Passenger(ticks, sf, ef, ticks);
+	} 
+
+	public void execute(){
+		//While tick does not reach given amount
+		for(int tick = 0; tick < ticks; tick++){
+			if(Math.random() < passengers){
+				//Creating passenger based on probability given
+				Passenger passenger = newPassenger();
+				floor.arrivals(passenger);
+			}
+
+			//Running elevator movement & passenger loading/unloading
+			List<Elevator> elevators = floor.getElevator();
+			List<Queue<Passenger>> floorQueue = floor.getFQ();
+
+			for(Elevator elevator : elevators){
+				elevator.unload();
+				if(!elevator.maxCap()){
+					int currentFloor = elevator.maxCap() ? elevator.getFloor() : -1;
+					for(int floor = 0; floor < floor.getFloor(); floor++){
+						Queue<Passenger> queue = floorQueue.get(floor);
+						if(!queue.isEmpty()){
+							elevator.load(queue.poll());
+							if(currentFloor == -1){
+								currentFloor = floor;
+								elevator.nextFloor(currentFloor);
+							}
+						}
+					}
+				}
+			}
+
+			//Checking if capacity is met
+			//If capacity is not met, elevator continues trajectory
+			for(Elevator elevator : elevators){
+				if(!elevator.maxCap()){
+					int currentFloor = elevator.getFloor();
+					int moveFloor = currentFloor + 1;
+					if(moveFloor < floor.getFloor()){
+						elevator.nextFloor(moveFloor);
+					}
+				}
+			}
+		}
+	}
+
+	//Printing simulation results
+	public void results(){
+		double average = 0.0;
+		double longTime = 0.0;
+		double shortTime = 0.0;
+
+		for(Passenger passenger : passengers){
+			double waitTick = passenger.getTimeTick();
+			average += waitTick;
+			longTime = Math.mac(longTime, waitTick);
+			shortTime = Math.min(shortTime, waitTick);
+		}
+
+		average /= passengers.capacity;
+
+		System.out.println("Average wait time: " + average);
+		System.out.println("Longest wait time" + longTime);
+		System.out.println("Shortest wait time" + shortTime);
+	}
+
+}
 
 public class elevatorProgram{
 	public static void main(String[] args) {
